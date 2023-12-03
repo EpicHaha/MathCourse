@@ -29,7 +29,7 @@ void  ACheckRelativePositionObject::CheckRelativePosition(AActor* Target) {
 
 	
 	FVector	LocalSpaceLocation = Target->GetActorTransform().InverseTransformPosition(GetActorLocation());
-	FVector LocalSpaceLocationSelf = GetActorTransform().InverseTransformPosition(Target->GetActorLocation());
+	FVector LocalSpaceLocationSelf = GetActorTransform().InverseTransformPosition(GetActorLocation());
 	
 	if (LocalSpaceLocation.X > LocalSpaceLocationSelf.X) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("In front of Target!"));
