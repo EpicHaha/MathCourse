@@ -27,14 +27,11 @@ void ACheckRelativePositionObject::Tick(float DeltaTime)
 
 void  ACheckRelativePositionObject::CheckRelativePosition(AActor* Target) {
 
-	FVector SelfLocation = GetActorLocation();
-	FVector TargetLocation = Target->GetActorLocation();
-	FVector Direction = SelfLocation - TargetLocation;
 	
-	FVector	LocalSpaceLocation = Target->GetActorTransform().InverseTransformPosition(TargetLocation);
+	FVector	LocalSpaceLocation = Target->GetActorTransform().InverseTransformPosition(GetActorLocation());
+	FVector LocalSpaceLocationSelf = GetActorTransform().InverseTransformPosition(Target->GetActorLocation());
 	
-	
-	if (LocalSpaceLocation.X > GetActorLocation().X) {
+	if (LocalSpaceLocation.X > LocalSpaceLocationSelf.X) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("In front of Target!"));
 	}
 	else
@@ -43,7 +40,7 @@ void  ACheckRelativePositionObject::CheckRelativePosition(AActor* Target) {
 
 	}
 
-	if (LocalSpaceLocation.Z <  GetActorLocation().Z) {
+	if (LocalSpaceLocation.Z < LocalSpaceLocationSelf.Z) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Below Target!"));
 	}
 	else
